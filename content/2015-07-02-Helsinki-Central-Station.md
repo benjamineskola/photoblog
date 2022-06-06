@@ -1,0 +1,12 @@
++++
+date = 2015-07-02
+title = "Helsinki Central Station"
+slug = "2015-Helsinki-Central-Station"
+
+[extra]
+image = "/2015-07-02_11-54-01_UTC.jpg"
+instagram = "https://instagram.com/p/4of9p9IIGb"
+location = "Rautatieasema"
++++
+
+<img src="/2015-07-02_11-54-01_UTC.jpg" />
