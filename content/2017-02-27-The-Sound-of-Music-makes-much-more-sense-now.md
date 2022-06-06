@@ -1,7 +1,7 @@
 +++
 date = 2017-02-27 14:30:52
 title = "The Sound of Music makes much more sense now"
-slug = "2017-The-Sound-of-Music-makes-much-more-sense-now"
+slug = "2017/The-Sound-of-Music-makes-much-more-sense-now"
 
 [extra]
 image = "/2017-02-27_14-30-52_UTC.jpg"

@@ -1,7 +1,7 @@
 +++
 date = 2018-07-07 15:18:56
 title = "Post-parade pint of Pride"
-slug = "2018-Post-parade-pint-of-Pride"
+slug = "2018/Post-parade-pint-of-Pride"
 
 [extra]
 image = "/2018-07-07_15-18-56_UTC.jpg"

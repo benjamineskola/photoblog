@@ -1,7 +1,7 @@
 +++
 date = 2015-07-02 11:54:01
 title = "Helsinki Central Station"
-slug = "2015-Helsinki-Central-Station"
+slug = "2015/Helsinki-Central-Station"
 
 [extra]
 image = "/2015-07-02_11-54-01_UTC.jpg"

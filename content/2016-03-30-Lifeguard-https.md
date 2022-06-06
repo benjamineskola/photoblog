@@ -1,7 +1,7 @@
 +++
 date = 2016-03-30 19:11:27
 title = "Lifeguard https"
-slug = "2016-Lifeguard-https"
+slug = "2016/Lifeguard-https"
 
 [extra]
 image = "/2016-03-30_19-11-27_UTC.jpg"

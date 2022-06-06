@@ -1,7 +1,7 @@
 +++
 date = 2020-01-19 22:15:33
 title = "Metz Cathedral"
-slug = "2020-Metz-Cathedral"
+slug = "2020/Metz-Cathedral"
 
 [extra]
 image = "/2020-01-19_22-15-33_UTC.jpg"

@@ -1,7 +1,7 @@
 +++
 date = 2015-06-13 10:42:51
 title = "Aamukahvi Muumipapan kanssa"
-slug = "2015-Aamukahvi-Muumipapan-kanssa"
+slug = "2015/Aamukahvi-Muumipapan-kanssa"
 
 [extra]
 image = "/2015-06-13_10-42-51_UTC.jpg"

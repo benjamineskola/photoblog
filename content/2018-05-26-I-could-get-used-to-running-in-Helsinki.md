@@ -1,7 +1,7 @@
 +++
 date = 2018-05-26 09:33:02
 title = "I could get used to running in Helsinki"
-slug = "2018-I-could-get-used-to-running-in-Helsinki"
+slug = "2018/I-could-get-used-to-running-in-Helsinki"
 
 [extra]
 image = "/2018-05-26_09-33-02_UTC_1.jpg"

@@ -1,7 +1,7 @@
 +++
 date = 2019-10-01 15:20:19
 title = "Suomenlinna ."
-slug = "2019-Suomenlinna"
+slug = "2019/Suomenlinna"
 
 [extra]
 image = "/2019-10-01_15-20-19_UTC.jpg"

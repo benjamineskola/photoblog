@@ -1,7 +1,7 @@
 +++
 date = 2016-08-27 16:37:29
 title = "Picnic spot"
-slug = "2016-Picnic-spot"
+slug = "2016/Picnic-spot"
 
 [extra]
 image = "/2016-08-27_16-37-29_UTC.jpg"

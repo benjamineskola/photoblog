@@ -1,7 +1,7 @@
 +++
 date = 2017-03-28 18:33:38
 title = "Someone already wrote my dissertation apparently"
-slug = "2017-Someone-already-wrote-my-dissertation-apparently"
+slug = "2017/Someone-already-wrote-my-dissertation-apparently"
 
 [extra]
 image = "/2017-03-28_18-33-38_UTC.jpg"

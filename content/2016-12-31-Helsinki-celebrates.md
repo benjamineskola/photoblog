@@ -1,7 +1,7 @@
 +++
 date = 2016-12-31 21:34:53
 title = "Helsinki celebrates"
-slug = "2016-Helsinki-celebrates"
+slug = "2016/Helsinki-celebrates"
 
 [extra]
 image = "/2016-12-31_21-34-53_UTC.jpg"

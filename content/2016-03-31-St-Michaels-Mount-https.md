@@ -1,7 +1,7 @@
 +++
 date = 2016-03-31 07:56:15
 title = "St Michael's Mount https"
-slug = "2016-St-Michaels-Mount-https"
+slug = "2016/St-Michaels-Mount-https"
 
 [extra]
 image = "/2016-03-31_07-56-15_UTC.jpg"

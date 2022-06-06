@@ -1,7 +1,7 @@
 +++
 date = 2021-01-24 11:45:11
 title = "Snow in Greenwich"
-slug = "2021-Snow-in-Greenwich"
+slug = "2021/Snow-in-Greenwich"
 
 [extra]
 image = "/2021-01-24_11-45-11_UTC.jpg"

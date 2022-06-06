@@ -1,7 +1,7 @@
 +++
 date = 2016-04-01 10:28:19
 title = "Tate Modern (re-edited version of an older picture) https"
-slug = "2016-Tate-Modern-re-edited-version-of-an-older-picture-https"
+slug = "2016/Tate-Modern-re-edited-version-of-an-older-picture-https"
 
 [extra]
 image = "/2016-04-01_10-28-19_UTC.jpg"

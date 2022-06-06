@@ -1,7 +1,7 @@
 +++
 date = 2016-01-03 18:01:12
 title = "Future rye bread (with London Pride) #baking"
-slug = "2016-Future-rye-bread-with-London-Pride-baking"
+slug = "2016/Future-rye-bread-with-London-Pride-baking"
 
 [extra]
 image = "/2016-01-03_18-01-12_UTC.jpg"

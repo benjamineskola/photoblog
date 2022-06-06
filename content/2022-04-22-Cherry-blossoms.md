@@ -1,7 +1,7 @@
 +++
 date = 2022-04-22 20:02:54
 title = "Cherry blossoms"
-slug = "2022-Cherry-blossoms"
+slug = "2022/Cherry-blossoms"
 
 [extra]
 image = "/2022-04-22_20-02-54_UTC.jpg"

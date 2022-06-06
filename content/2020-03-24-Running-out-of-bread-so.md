@@ -1,7 +1,7 @@
 +++
 date = 2020-03-24 22:49:16
 title = "Running out of bread, so"
-slug = "2020-Running-out-of-bread-so"
+slug = "2020/Running-out-of-bread-so"
 
 [extra]
 image = "/2020-03-24_22-49-16_UTC.jpg"

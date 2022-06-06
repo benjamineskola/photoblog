@@ -1,7 +1,7 @@
 +++
 date = 2016-05-01 10:34:35
 title = "Your actual Acropolis, that is."
-slug = "2016-Your-actual-Acropolis-that-is"
+slug = "2016/Your-actual-Acropolis-that-is"
 
 [extra]
 image = "/2016-05-01_10-34-35_UTC.jpg"

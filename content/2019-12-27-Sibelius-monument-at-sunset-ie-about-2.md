@@ -1,7 +1,7 @@
 +++
 date = 2019-12-27 18:20:51
 title = "Sibelius monument at sunset (i.e., about 2"
-slug = "2019-Sibelius-monument-at-sunset-ie-about-2"
+slug = "2019/Sibelius-monument-at-sunset-ie-about-2"
 
 [extra]
 image = "/2019-12-27_18-20-51_UTC.jpg"

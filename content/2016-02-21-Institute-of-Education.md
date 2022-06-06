@@ -1,7 +1,7 @@
 +++
 date = 2016-02-21 18:45:05
 title = "Institute of Education"
-slug = "2016-Institute-of-Education"
+slug = "2016/Institute-of-Education"
 
 [extra]
 image = "/2016-02-21_18-45-05_UTC.jpg"

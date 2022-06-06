@@ -1,7 +1,7 @@
 +++
 date = 2016-07-02 21:14:26
 title = "Evening drink and a walk home."
-slug = "2016-Evening-drink-and-a-walk-home"
+slug = "2016/Evening-drink-and-a-walk-home"
 
 [extra]
 image = "/2016-07-02_21-14-26_UTC.jpg"

@@ -1,7 +1,7 @@
 +++
 date = 2015-07-02 10:52:35
 title = "Hakaniemi Kalliosta katsottuna"
-slug = "2015-Hakaniemi-Kalliosta-katsottuna"
+slug = "2015/Hakaniemi-Kalliosta-katsottuna"
 
 [extra]
 image = "/2015-07-02_10-52-35_UTC.jpg"

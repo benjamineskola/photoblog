@@ -1,7 +1,7 @@
 +++
 date = 2019-01-03 12:12:22
 title = "Kallio church, winter sunset"
-slug = "2019-Kallio-church-winter-sunset"
+slug = "2019/Kallio-church-winter-sunset"
 
 [extra]
 image = "/2019-01-03_12-12-22_UTC.jpg"
