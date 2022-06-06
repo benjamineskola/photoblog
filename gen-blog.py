@@ -33,8 +33,10 @@ def create_post(
     }
 
     if title:
-        slug = re.sub(r"[^A-Za-z0-9-]+", "", title.strip().replace(" ", "-")).strip("-")
-        filename += f"-{slug}"
+        slug = re.sub(
+            r"[^A-Za-z0-9-]+", "", title.lower().strip().replace(" ", "-")
+        ).strip("-")
+        filename += "-" + slug
         metadata["slug"] = timestamp.strftime("%Y") + "/" + slug
     else:
         metadata["title"] = timestamp.strftime("%Y-%m-%d")
