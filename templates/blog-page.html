@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  <a href="/">
+    ben's photos
+  </a>
+</h1>
+
+<h2 class="title">
+  <a href="/">
+    {{ page.title }}
+  </a>
+</h2>
+<p class="subtitle"><strong>{{ page.date | date(format="%d %b %Y") }}</strong></p>
+<main>
+  {% if page.extra.location %}
+  <p class="location">@ {{ page.extra.location }}</p>
+  {% endif %}
+
+  {{ page.content | safe }}
+
+  {% if page.extra.instagram %}
+    <a class="fab fa-instagram" href="{{ page.extra.instagram }}"></a>
+  {% endif %}
+</main>
+<p><a href="/">back</a></p>
+{% endblock content %}

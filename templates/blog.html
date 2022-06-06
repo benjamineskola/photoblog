@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  <a href="/">
+    {{ section.title }}
+  </a>
+</h1>
+
+
+<nav>
+  <ul>
+    {% for page in section.pages %}
+      <li>
+        <a href="{{ page.permalink | safe }}">
+          <img src="{{ page.extra.image }}" class="index" />
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+
+{% endblock content %}

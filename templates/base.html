@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>photos.eskola.uk</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/brands.min.css" integrity="sha256-cdja5yXsTdglBOJNQM9uVniw4C0oiIpo9rhIiofUJN0=" crossorigin="anonymous" />
+  <style>
+  @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@5.2/distr/fira_code.css);
+    body {
+      font-family: "Fira Code";
+      background-color: rgb(26,26,26);
+      color: rgb(229,229,229);
+
+      margin-left: 2em;
+      margin-right: 2em;
+    }
+
+    a, a:visited, a:hover, a:active {
+      color: rgb(229,229,229);
+    }
+
+    main img {
+      max-height: 600px;
+      max-width: 800px;
+      padding: 1em;
+
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    ul {
+       list-style: none;
+    }
+
+    li img {
+      width: 450px;
+      height: 450px;
+      object-fit: cover;
+      padding: 3px;
+      margin-bottom: 1em;
+
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    li img:hover {
+      border: 3px solid rgb(229,229,229);
+    }
+
+    p.location {
+      font-style: italic;
+    }
+
+    main p {
+      width: 50%;
+    }
+
+</style>
+</head>
+
+<body>
+  {% block content %} {% endblock %}
+</body>
+
+</html>
