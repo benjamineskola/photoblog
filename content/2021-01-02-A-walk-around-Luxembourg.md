@@ -1,5 +1,5 @@
 +++
-date = 2021-01-02
+date = 2021-01-02 12:09:14
 title = "A walk around Luxembourg 🇱🇺"
 slug = "2021-A-walk-around-Luxembourg"
 

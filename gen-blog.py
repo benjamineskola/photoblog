@@ -8,6 +8,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import tomli_w
+
 BLOG_DIR = Path(sys.argv[-1])
 NEWLINE = "\n"
 
@@ -21,40 +23,43 @@ def create_post(
     location: str,
 ) -> None:
     filename = timestamp.strftime("%Y-%m-%d")
-    slug = ""
+
+    metadata = {
+        "date": timestamp,
+        "title": title,
+        "extra": {
+            "image": "/" + os.path.basename(images[0]),
+        },
+    }
+
     if title:
         slug = re.sub(r"[^A-Za-z0-9-]+", "", title.strip().replace(" ", "-")).strip("-")
         filename += f"-{slug}"
+        metadata["slug"] = timestamp.strftime("%Y") + "-" + slug
     else:
-        title = timestamp.strftime("%Y-%m-%d")
+        metadata["title"] = timestamp.strftime("%Y-%m-%d")
         filename += "-" + timestamp.strftime("%H-%M-%S")
+
     filename += ".md"
 
     image_html = "\n\n".join(
         [f'<img src="/{os.path.basename(image)}" />' for image in sorted(images)]
     )
 
+    if insta_code:
+        metadata["extra"]["instagram"] = f"https://instagram.com/p/{insta_code}"
+    if location:
+        metadata["extra"]["location"] = location
+
     for image in images:
         target = BLOG_DIR / os.path.basename(image)
-        print(f"linking {image}-> {target}")
 
-        if os.path.exists(target):
-            os.unlink(target)
-        os.link(image, target)
+        if not os.path.exists(target):
+            os.link(image, target)
 
     with open(BLOG_DIR / filename, "w") as file:
         print("+++", file=file)
-        print(f"date = {timestamp.strftime('%Y-%m-%d')}", file=file)
-        if title:
-            print(f'title = "{title}"', file=file)
-        if slug:
-            print(f'slug = "{timestamp.strftime("%Y")}-{slug}"', file=file)
-
-        print(f'\n[extra]\nimage = "/{os.path.basename(images[0])}"', file=file)
-        if insta_code:
-            print(f'instagram = "https://instagram.com/p/{insta_code}"', file=file)
-        if location:
-            print(f'location = "{location}"', file=file)
+        print(tomli_w.dumps(metadata).strip(), file=file)
 
         print("+++\n", file=file)
         if body:

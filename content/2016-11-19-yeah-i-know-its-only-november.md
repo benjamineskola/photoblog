@@ -1,5 +1,5 @@
 +++
-date = 2016-11-19
+date = 2016-11-19 17:54:54
 title = "yeah i know it's only november"
 slug = "2016-yeah-i-know-its-only-november"
 

@@ -1,5 +1,5 @@
 +++
-date = 2015-06-13
+date = 2015-06-13 10:42:51
 title = "Aamukahvi Muumipapan kanssa"
 slug = "2015-Aamukahvi-Muumipapan-kanssa"
 

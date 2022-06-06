@@ -1,5 +1,5 @@
 +++
-date = 2019-11-20
+date = 2019-11-20 18:49:36
 title = "Morning by the river."
 slug = "2019-Morning-by-the-river"
 

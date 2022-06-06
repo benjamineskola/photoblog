@@ -1,5 +1,5 @@
 +++
-date = 2016-01-04
+date = 2016-01-04 23:47:25
 title = "Rye loaf no.2 (100% rye flour, didn't rise as much)"
 slug = "2016-Rye-loaf-no2-100-rye-flour-didnt-rise-as-much"
 

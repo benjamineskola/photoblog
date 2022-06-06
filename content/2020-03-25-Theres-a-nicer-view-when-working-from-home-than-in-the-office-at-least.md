@@ -1,5 +1,5 @@
 +++
-date = 2020-03-25
+date = 2020-03-25 17:02:16
 title = "There’s a nicer view when working from home than in the office, at least."
 slug = "2020-Theres-a-nicer-view-when-working-from-home-than-in-the-office-at-least"
 

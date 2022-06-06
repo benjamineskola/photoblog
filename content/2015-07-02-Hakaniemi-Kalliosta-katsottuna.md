@@ -1,5 +1,5 @@
 +++
-date = 2015-07-02
+date = 2015-07-02 10:52:35
 title = "Hakaniemi Kalliosta katsottuna"
 slug = "2015-Hakaniemi-Kalliosta-katsottuna"
 

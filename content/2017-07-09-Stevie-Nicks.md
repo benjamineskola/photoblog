@@ -1,5 +1,5 @@
 +++
-date = 2017-07-09
+date = 2017-07-09 18:00:10
 title = "Stevie Nicks"
 slug = "2017-Stevie-Nicks"
 

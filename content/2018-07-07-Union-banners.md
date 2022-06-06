@@ -1,5 +1,5 @@
 +++
-date = 2018-07-07
+date = 2018-07-07 13:54:47
 title = "Union banners"
 slug = "2018-Union-banners"
 

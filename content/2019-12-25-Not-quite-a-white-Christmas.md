@@ -1,5 +1,5 @@
 +++
-date = 2019-12-25
+date = 2019-12-25 10:39:30
 title = "Not quite a white Christmas"
 slug = "2019-Not-quite-a-white-Christmas"
 

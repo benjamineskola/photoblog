@@ -1,5 +1,5 @@
 +++
-date = 2015-06-11
+date = 2015-06-11 15:21:17
 title = "You know a book is going to be interesting when Lenin wrote an introduction."
 slug = "2015-You-know-a-book-is-going-to-be-interesting-when-Lenin-wrote-an-introduction"
 

@@ -1,5 +1,5 @@
 +++
-date = 2018-06-23
+date = 2018-06-23 13:49:44
 title = "There are worse places to study, I guess."
 slug = "2018-There-are-worse-places-to-study-I-guess"
 

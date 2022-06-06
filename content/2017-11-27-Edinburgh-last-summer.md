@@ -1,5 +1,5 @@
 +++
-date = 2017-11-27
+date = 2017-11-27 15:58:53
 title = "Edinburgh, last summer."
 slug = "2017-Edinburgh-last-summer"
 

@@ -1,5 +1,5 @@
 +++
-date = 2015-07-02
+date = 2015-07-02 11:54:01
 title = "Helsinki Central Station"
 slug = "2015-Helsinki-Central-Station"
 
