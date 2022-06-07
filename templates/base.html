@@ -34,7 +34,9 @@
     }
 
     ul {
-       list-style: none;
+      list-style: none;
+      padding: 0;
+      text-align: center;
     }
 
     li img {
@@ -42,15 +44,15 @@
       height: 450px;
       object-fit: cover;
       padding: 3px;
-      margin-bottom: 1em;
-
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    li img:hover {
-      border: 3px solid rgb(229,229,229);
+    li {
+      border: 3px solid transparent;
+      display: inline-block;
+    }
+
+    li:hover {
+      border-color: rgb(229,229,229);
     }
 
     p.location {
@@ -65,8 +67,7 @@
       margin-top: 2em;
       margin-bottom: 2em;
     }
-
-</style>
+  </style>
 </head>
 
 <body>
