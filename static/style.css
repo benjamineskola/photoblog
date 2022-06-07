@@ -60,7 +60,9 @@ main p {
 	main img {
 		max-width: 95%;
 	}
+}
 
+@media only screen and (max-width: 476px) {
 	nav li img {
 		width: 95%;
 		height: unset;
