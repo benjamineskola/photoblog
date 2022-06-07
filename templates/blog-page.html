@@ -22,9 +22,19 @@
 
   <ul>
     {% for image in page.extra.images %}
-      <li><img src="{{ image }}" loading="lazy" /></li>
+      <li>
+        <a href="#image-{{ loop.index }}">
+          <img src="{{ image }}" loading="lazy" />
+        </a>
+      </li>
     {% endfor %}
   </ul>
+
+  {% for image in page.extra.images %}
+    <a href="#" class="lightbox" id="image-{{ loop.index }}">
+      <span style="background-image: url('{{ image }}')"></span>
+    </a>
+  {% endfor %}
 
   {% if page.extra.instagram %}
     <a class="fab fa-instagram" href="{{ page.extra.instagram }}"></a>
