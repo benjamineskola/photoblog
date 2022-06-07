@@ -55,3 +55,14 @@ main p {
 	margin-top: 2em;
 	margin-bottom: 2em;
 }
+
+@media only screen and (max-width: 800px) {
+	main img {
+		max-width: 95%;
+	}
+
+	nav li img {
+		width: 95%;
+		height: unset;
+	}
+}
