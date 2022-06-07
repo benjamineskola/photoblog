@@ -1,0 +1,57 @@
+body {
+	font-family: "IBM Plex Mono";
+	background-color: rgb(26,26,26);
+	color: rgb(229,229,229);
+
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+a, a:visited, a:hover, a:active {
+	color: rgb(229,229,229);
+}
+
+main img {
+	max-height: 600px;
+	max-width: 800px;
+	padding: 1em;
+
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	text-align: center;
+}
+
+nav li img {
+	width: 450px;
+	height: 450px;
+	object-fit: cover;
+	padding: 3px;
+}
+
+li {
+	border: 3px solid transparent;
+	display: inline-block;
+}
+
+nav li:hover {
+	border-color: rgb(229,229,229);
+}
+
+p.location {
+	font-style: italic;
+}
+
+main p {
+	width: 50%;
+}
+
+.copyright {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
