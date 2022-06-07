@@ -4,9 +4,10 @@ title = "Senate House"
 slug = "2016/senate-house"
 
 [extra]
-image = "/2016-04-27_19-12-45_UTC.jpg"
+images = [
+    "/2016-04-27_19-12-45_UTC.jpg",
+]
 instagram = "https://instagram.com/p/BEtwpiFoIPW"
 location = "Senate House, London"
 +++
 
-<img src="/2016-04-27_19-12-45_UTC.jpg" />

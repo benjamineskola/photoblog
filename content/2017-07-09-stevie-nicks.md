@@ -4,8 +4,9 @@ title = "Stevie Nicks"
 slug = "2017/stevie-nicks"
 
 [extra]
-image = "/2017-07-09_18-00-10_UTC.jpg"
+images = [
+    "/2017-07-09_18-00-10_UTC.jpg",
+]
 instagram = "https://instagram.com/p/BWVchMeBHKx"
 +++
 
-<img src="/2017-07-09_18-00-10_UTC.jpg" />

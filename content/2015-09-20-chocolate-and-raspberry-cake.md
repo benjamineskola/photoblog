@@ -4,8 +4,9 @@ title = "Chocolate and raspberry cake"
 slug = "2015/chocolate-and-raspberry-cake"
 
 [extra]
-image = "/2015-09-20_20-49-35_UTC.jpg"
+images = [
+    "/2015-09-20_20-49-35_UTC.jpg",
+]
 instagram = "https://instagram.com/p/73c2PDoIJk"
 +++
 
-<img src="/2015-09-20_20-49-35_UTC.jpg" />

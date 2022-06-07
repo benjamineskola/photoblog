@@ -4,9 +4,10 @@ title = "Winter birch"
 slug = "2017/winter-birch"
 
 [extra]
-image = "/2017-12-26_12-07-29_UTC.jpg"
+images = [
+    "/2017-12-26_12-07-29_UTC.jpg",
+]
 instagram = "https://instagram.com/p/BdKjSxphoFz"
 location = "Töölönlahti"
 +++
 
-<img src="/2017-12-26_12-07-29_UTC.jpg" />

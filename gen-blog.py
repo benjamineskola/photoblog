@@ -28,7 +28,7 @@ def create_post(
         "date": timestamp,
         "title": title,
         "extra": {
-            "image": "/" + os.path.basename(images[0]),
+            "images": ["/" + os.path.basename(image) for image in sorted(images)],
         },
     }
 
@@ -46,10 +46,6 @@ def create_post(
         )
 
     filename += ".md"
-
-    image_html = "\n\n".join(
-        [f'<img src="/{os.path.basename(image)}" />' for image in sorted(images)]
-    )
 
     if insta_code:
         metadata["extra"]["instagram"] = f"https://instagram.com/p/{insta_code}"
@@ -69,7 +65,6 @@ def create_post(
         print("+++\n", file=file)
         if body:
             print(body, file=file)
-        print(image_html, file=file)
 
 
 if __name__ == "__main__":

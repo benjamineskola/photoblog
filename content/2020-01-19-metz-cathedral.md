@@ -4,9 +4,10 @@ title = "Metz Cathedral"
 slug = "2020/metz-cathedral"
 
 [extra]
-image = "/2020-01-19_22-15-33_UTC.jpg"
+images = [
+    "/2020-01-19_22-15-33_UTC.jpg",
+]
 instagram = "https://instagram.com/p/B7hIQOiFZRb"
 location = "Cathédrale Saint-Étienne de Metz"
 +++
 
-<img src="/2020-01-19_22-15-33_UTC.jpg" />

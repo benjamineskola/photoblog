@@ -4,12 +4,11 @@ title = "Edinburgh, last summer."
 slug = "2017/edinburgh-last-summer"
 
 [extra]
-image = "/2017-11-27_15-58-53_UTC_1.jpg"
+images = [
+    "/2017-11-27_15-58-53_UTC_1.jpg",
+    "/2017-11-27_15-58-53_UTC_2.jpg",
+    "/2017-11-27_15-58-53_UTC_3.jpg",
+]
 instagram = "https://instagram.com/p/BcASuRiBLhR"
 +++
 
-<img src="/2017-11-27_15-58-53_UTC_1.jpg" />
-
-<img src="/2017-11-27_15-58-53_UTC_2.jpg" />
-
-<img src="/2017-11-27_15-58-53_UTC_3.jpg" />

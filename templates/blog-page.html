@@ -20,6 +20,12 @@
 
   {{ page.content | safe }}
 
+  <ul>
+    {% for image in page.extra.images %}
+      <li><img src="{{ image }}" loading="lazy" /></li>
+    {% endfor %}
+  </ul>
+
   {% if page.extra.instagram %}
     <a class="fab fa-instagram" href="{{ page.extra.instagram }}"></a>
   {% endif %}

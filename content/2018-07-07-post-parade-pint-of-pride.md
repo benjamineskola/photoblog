@@ -4,9 +4,10 @@ title = "Post-parade pint of Pride"
 slug = "2018/post-parade-pint-of-pride"
 
 [extra]
-image = "/2018-07-07_15-18-56_UTC.jpg"
+images = [
+    "/2018-07-07_15-18-56_UTC.jpg",
+]
 instagram = "https://instagram.com/p/Bk72n6vD70h"
 location = "The Jack Horner, Fitzrovia"
 +++
 
-<img src="/2018-07-07_15-18-56_UTC.jpg" />

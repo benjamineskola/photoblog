@@ -4,8 +4,9 @@ title = "Finnish breakfast"
 slug = "2017/finnish-breakfast"
 
 [extra]
-image = "/2017-07-01_10-48-26_UTC.jpg"
+images = [
+    "/2017-07-01_10-48-26_UTC.jpg",
+]
 instagram = "https://instagram.com/p/BWAEwEDhI0U"
 +++
 
-<img src="/2017-07-01_10-48-26_UTC.jpg" />
