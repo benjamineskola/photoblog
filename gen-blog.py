@@ -7,6 +7,7 @@ import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 import tomli_w
 from PIL import Image
@@ -18,18 +19,18 @@ NEWLINE = "\n"
 def create_post(
     title: str,
     body: str,
-    images: list[str],
+    images: list[Path],
     timestamp: datetime,
-    insta_code: str,
-    location: str,
+    **kwargs: str,
 ) -> None:
     filename = timestamp.strftime("%Y-%m-%d")
 
-    metadata = {
+    metadata: dict[str, Any] = {
         "date": timestamp,
         "title": title,
         "extra": {
-            "images": ["/" + os.path.basename(image) for image in sorted(images)],
+            "images": ["/" + os.path.basename(image) for image in images],
+            **kwargs,
         },
     }
 
@@ -47,11 +48,6 @@ def create_post(
         )
 
     filename += ".md"
-
-    if insta_code:
-        metadata["extra"]["instagram"] = f"https://instagram.com/p/{insta_code}"
-    if location:
-        metadata["extra"]["location"] = location
 
     for image in images:
         target = BLOG_DIR / os.path.basename(image)
@@ -103,22 +99,23 @@ if __name__ == "__main__":
     if path.is_dir():
         files = sorted(path.glob("2*.json.xz"))
     else:
-        files = sys.argv[1:-2]
+        files = [Path(f) for f in sys.argv[1:-2]]
 
     for file in files:
         print(f"Processing {file}")
         text = subprocess.run(["xzcat", file], capture_output=True).stdout
         post = json.loads(text)
+
+        metadata = {"instagram": "https://instagram.com/p/" + post["node"]["shortcode"]}
         caption = post["node"]["iphone_struct"].get("caption")
-        insta_code = post["node"]["shortcode"]
         location = post["node"]["iphone_struct"].get("location")
         if location:
-            location = location["name"]
+            metadata["location"] = location["name"]
 
         basename = Path(Path(file).stem).stem
 
         title = ""
-        body = []
+        body = ""
         if caption:
             title, *body = caption.get("text").splitlines()
             body = "\n".join(
@@ -126,12 +123,13 @@ if __name__ == "__main__":
             )
 
         if ":" in title:
-            title, rest = title.split(":")
+            title, rest = title.split(":", 1)
             body = rest.strip() + "\n" + body
 
-        images = Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(
-            f"{basename}*.jpg"
+        images = sorted(
+            Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(f"{basename}*.jpg"),
+            key=str,
         )
 
         timestamp = datetime.strptime(basename, "%Y-%m-%d_%H-%M-%S_%Z")
-        create_post(title, body, sorted(images), timestamp, insta_code, location)
+        create_post(title, body, images, timestamp, **metadata)
