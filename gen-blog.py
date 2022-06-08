@@ -59,6 +59,14 @@ def create_post(
         if not os.path.exists(target):
             os.link(image, target)
 
+        med_path = BLOG_DIR / (
+            Path(BLOG_DIR / os.path.basename(image)).stem + "_med.jpg"
+        )
+        if not os.path.exists(med_path):
+            medium = Image.open(image)
+            medium.thumbnail((800, 800))
+            medium.save(med_path)
+
     thumbnail_path = BLOG_DIR / (
         Path(BLOG_DIR / os.path.basename(images[0])).stem + "_thumb.jpg"
     )

@@ -31,7 +31,7 @@
     {% for image in page.extra.images %}
       <li>
         <a href="#image-{{ loop.index }}-lightbox" id="image-{{ loop.index }}-anchor">
-          <img src="{{ image }}" loading="lazy" />
+          <img src="{{ image | replace(from=".jpg", to="_med.jpg") }}" loading="lazy" />
         </a>
       </li>
     {% endfor %}
