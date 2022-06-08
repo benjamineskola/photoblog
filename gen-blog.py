@@ -56,51 +56,6 @@ class ImageSet:
         return self.name
 
 
-def create_post(
-    title: str,
-    body: str,
-    images: list[Path],
-    timestamp: datetime,
-    **kwargs: str,
-) -> None:
-    filename = timestamp.strftime("%Y-%m-%d")
-
-    metadata: dict[str, Any] = {
-        "date": timestamp,
-        "title": title,
-        "extra": {
-            "images": ["/" + os.path.basename(image) for image in images],
-            **kwargs,
-        },
-    }
-
-    if title:
-        slug = re.sub(
-            r"[^A-Za-z0-9-]+", "", title.lower().strip().replace(" ", "-")
-        ).strip("-")
-        filename += "-" + slug
-        metadata["slug"] = timestamp.strftime("%Y") + "/" + slug
-    else:
-        metadata["title"] = timestamp.strftime("%Y-%m-%d")
-        filename += "-" + timestamp.strftime("%H-%M-%S")
-        metadata["slug"] = (
-            timestamp.strftime("%Y") + "/" + timestamp.strftime("%Y-%m-%dT%H:%M:%S")
-        )
-
-    filename += ".md"
-
-    for n, image in enumerate(images):
-        ImageSet(image).save(with_thumbnail=(n == 0))
-
-    with open(BLOG_DIR / filename, "w") as file:
-        print("+++", file=file)
-        print(tomli_w.dumps(metadata).strip(), file=file)
-
-        print("+++\n", file=file)
-        if body:
-            print(body, file=file)
-
-
 if __name__ == "__main__":
     path = Path(sys.argv[1])
     if path.is_dir():
@@ -113,13 +68,8 @@ if __name__ == "__main__":
         text = subprocess.run(["xzcat", file], capture_output=True).stdout
         post = json.loads(text)
 
-        metadata = {"instagram": "https://instagram.com/p/" + post["node"]["shortcode"]}
         caption = post["node"]["iphone_struct"].get("caption")
         location = post["node"]["iphone_struct"].get("location")
-        if location:
-            metadata["location"] = location["name"]
-
-        basename = Path(Path(file).stem).stem
 
         title = ""
         body = ""
@@ -133,10 +83,49 @@ if __name__ == "__main__":
             title, rest = title.split(":", 1)
             body = rest.strip() + "\n" + body
 
+        stem = file.name.removesuffix(".json.xz")
         images = sorted(
-            Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(f"{basename}*.jpg"),
+            Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(f"{stem}*.jpg"),
             key=str,
         )
 
-        timestamp = datetime.strptime(basename, "%Y-%m-%d_%H-%M-%S_%Z")
-        create_post(title, body, images, timestamp, **metadata)
+        timestamp = datetime.strptime(stem, "%Y-%m-%d_%H-%M-%S_%Z")
+
+        metadata: dict[str, Any] = {
+            "date": timestamp,
+            "title": title,
+            "extra": {
+                "images": ["/" + os.path.basename(image) for image in images],
+                "instagram": "https://instagram.com/p/" + post["node"]["shortcode"],
+            },
+        }
+        if location:
+            metadata["extra"]["location"] = location["name"]
+
+        filename = timestamp.strftime("%Y-%m-%d")
+
+        if title:
+            slug = re.sub(
+                r"[^A-Za-z0-9-]+", "", title.lower().strip().replace(" ", "-")
+            ).strip("-")
+            filename += "-" + slug
+            metadata["slug"] = timestamp.strftime("%Y") + "/" + slug
+        else:
+            metadata["title"] = timestamp.strftime("%Y-%m-%d")
+            filename += "-" + timestamp.strftime("%H-%M-%S")
+            metadata["slug"] = (
+                timestamp.strftime("%Y") + "/" + timestamp.strftime("%Y-%m-%dT%H:%M:%S")
+            )
+
+        filename += ".md"
+
+        for n, image in enumerate(images):
+            ImageSet(image).save(with_thumbnail=(n == 0))
+
+        with (BLOG_DIR / filename).open("w") as file:
+            print("+++", file=file)
+            print(tomli_w.dumps(metadata).strip(), file=file)
+
+            print("+++\n", file=file)
+            if body:
+                print(body, file=file)
