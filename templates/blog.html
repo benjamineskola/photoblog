@@ -6,7 +6,7 @@
     {% for page in section.pages %}
       <li>
         <a href="{{ page.permalink | safe }}">
-          <img src="{{ page.extra.images[0] }}" class="index" loading="lazy" />
+          <img src="{{ page.extra.images[0] | replace(from=".jpg", to="_thumb.jpg")  }}" class="index" loading="lazy" />
         </a>
       </li>
     {% endfor %}

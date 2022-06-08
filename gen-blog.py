@@ -9,6 +9,7 @@ from datetime import datetime
 from pathlib import Path
 
 import tomli_w
+from PIL import Image
 
 BLOG_DIR = Path(sys.argv[-1])
 NEWLINE = "\n"
@@ -58,6 +59,28 @@ def create_post(
         if not os.path.exists(target):
             os.link(image, target)
 
+    thumbnail_path = BLOG_DIR / (
+        Path(BLOG_DIR / os.path.basename(images[0])).stem + "_thumb.jpg"
+    )
+    if not os.path.exists(thumbnail_path):
+        thumb = Image.open(images[0])
+        width, height = thumb.size
+
+        if width > height:
+            thumb.thumbnail((999999, 450))
+        elif height > width:
+            thumb.thumbnail((450, 999999))
+        else:
+            thumb.thumbnail((450, 450))
+
+        if width != height:
+            width, height = thumb.size
+            mid_w = width // 2
+            mid_h = height // 2
+            thumb = thumb.crop((mid_w - 225, mid_h - 225, mid_w + 225, mid_h + 225))
+
+        thumb.save(thumbnail_path)
+
     with open(BLOG_DIR / filename, "w") as file:
         print("+++", file=file)
         print(tomli_w.dumps(metadata).strip(), file=file)
@@ -103,4 +126,4 @@ if __name__ == "__main__":
         )
 
         timestamp = datetime.strptime(basename, "%Y-%m-%d_%H-%M-%S_%Z")
-        create_post(title, body, list(images), timestamp, insta_code, location)
+        create_post(title, body, sorted(images), timestamp, insta_code, location)
