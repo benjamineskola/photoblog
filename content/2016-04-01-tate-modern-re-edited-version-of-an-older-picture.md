@@ -1,7 +1,7 @@
 +++
 date = 2016-04-01 10:28:19
-title = "Tate Modern (re-edited version of an older picture) https"
-slug = "2016/tate-modern-re-edited-version-of-an-older-picture-https"
+title = "Tate Modern (re-edited version of an older picture)"
+slug = "2016/tate-modern-re-edited-version-of-an-older-picture"
 
 [extra]
 images = [
@@ -11,5 +11,4 @@ instagram = "https://instagram.com/p/BDp39yvIIKh"
 location = "Tate Modern"
 +++
 
-//500px.com/photo/147219563/
-
+https://500px.com/photo/147219563/

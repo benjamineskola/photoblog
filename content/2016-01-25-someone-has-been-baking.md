@@ -1,6 +1,6 @@
 +++
 date = 2016-01-25 08:34:37
-title = "Someone has been baking. 😋"
+title = "Someone has been baking"
 slug = "2016/someone-has-been-baking"
 
 [extra]
@@ -10,3 +10,4 @@ images = [
 instagram = "https://instagram.com/p/BA9Jsa1IIJP"
 +++
 
+😋

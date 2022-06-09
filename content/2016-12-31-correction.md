@@ -12,4 +12,3 @@ location = "Töölönlahti"
 +++
 
 that was just the warmup. 🇫🇮💯
-

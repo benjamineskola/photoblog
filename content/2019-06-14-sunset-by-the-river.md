@@ -11,4 +11,3 @@ instagram = "https://instagram.com/p/BytR6zRlLH5"
 location = "Greenwich"
 +++
 
- #shotwithhalide #darkroomapp

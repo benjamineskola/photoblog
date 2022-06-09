@@ -12,4 +12,3 @@ location = "Café Engländer"
 +++
 
 an English-style coffee shop.
-

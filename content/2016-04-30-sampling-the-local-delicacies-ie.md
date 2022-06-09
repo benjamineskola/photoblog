@@ -1,7 +1,7 @@
 +++
 date = 2016-04-30 20:29:55
-title = "Sampling the local delicacies i.e. margaritas."
-slug = "2016/sampling-the-local-delicacies-ie-margaritas"
+title = "Sampling the local delicacies i.e"
+slug = "2016/sampling-the-local-delicacies-ie"
 
 [extra]
 images = [
@@ -10,3 +10,4 @@ images = [
 instagram = "https://instagram.com/p/BE1n3W_IIOG"
 +++
 
+margaritas.

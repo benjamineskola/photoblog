@@ -38,9 +38,15 @@ class Post:
                 if line != "." and not line.strip().startswith("#")
             )
 
-        if ":" in self.title:
-            self.title, rest = self.title.split(":", 1)
-            self.body = rest.strip() + "\n" + self.body
+        if ". " in self.title or ": " in self.title or "http" in self.title:
+            split_re = r"(:\s+|(?<!^\d)\.\s+|\s*(?=http://)|\s*(?=https://))"
+            print(repr(re.split(split_re, self.title)))
+            self.title, *rest = re.split(split_re, self.title, 1)
+            self.body = (
+                "".join(w for w in rest if w not in [": ", ". ", ""]).strip()
+                + "\n"
+                + self.body
+            )
 
         self.images = sorted(
             Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(f"{stem}*.jpg"),

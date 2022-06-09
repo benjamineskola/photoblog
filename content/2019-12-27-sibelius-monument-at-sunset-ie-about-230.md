@@ -1,7 +1,7 @@
 +++
 date = 2019-12-27 18:20:51
-title = "Sibelius monument at sunset (i.e., about 2"
-slug = "2019/sibelius-monument-at-sunset-ie-about-2"
+title = "Sibelius monument at sunset (i.e., about 2:30)"
+slug = "2019/sibelius-monument-at-sunset-ie-about-230"
 
 [extra]
 images = [
@@ -10,6 +10,4 @@ images = [
 instagram = "https://instagram.com/p/B6lfHA1FOPf"
 location = "Sibeliuspuisto"
 +++
-
-30)
 

@@ -11,4 +11,3 @@ instagram = "https://instagram.com/p/BHo7XcqBKGq"
 +++
 
 the Metropolitan Cathedral of the Anunciation (1862) and the Church of St Eleftherios (c. 1200).
-

@@ -1,7 +1,7 @@
 +++
 date = 2016-03-31 18:46:30
-title = "Mount's Bay https"
-slug = "2016/mounts-bay-https"
+title = "Mount's Bay"
+slug = "2016/mounts-bay"
 
 [extra]
 images = [
@@ -11,5 +11,4 @@ instagram = "https://instagram.com/p/BDoMLohIIJ4"
 location = "Long Rock Penzance"
 +++
 
-//500px.com/photo/147142743/
-
+https://500px.com/photo/147142743/

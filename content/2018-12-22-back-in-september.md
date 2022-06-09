@@ -1,6 +1,6 @@
 +++
 date = 2018-12-22 23:45:57
-title = "Back in September. ."
+title = "Back in September"
 slug = "2018/back-in-september"
 
 [extra]
@@ -11,3 +11,4 @@ instagram = "https://instagram.com/p/BrtWMY8F5uX"
 location = "Boscastle Harbour"
 +++
 
+.

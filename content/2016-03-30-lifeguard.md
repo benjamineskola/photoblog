@@ -1,7 +1,7 @@
 +++
 date = 2016-03-30 19:11:27
-title = "Lifeguard https"
-slug = "2016/lifeguard-https"
+title = "Lifeguard"
+slug = "2016/lifeguard"
 
 [extra]
 images = [
@@ -11,5 +11,4 @@ instagram = "https://instagram.com/p/BDlqPf5IIKr"
 location = "St Ives, Cornwall"
 +++
 
-//500px.com/photo/146986895/
-
+https://500px.com/photo/146986895/
