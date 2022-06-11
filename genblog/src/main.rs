@@ -210,7 +210,7 @@ fn process_image(input_filename: &Path, output_dir: &Path) {
         .to_str()
         .unwrap()
         .replace(".jpg", "_med.jpg");
-    let med_image_path = Path::new(&med_image_filename);
+    let med_image_path = output_dir.join(med_image_filename);
 
     let thumbnail_filename = &output_filename
         .file_name()
@@ -218,7 +218,7 @@ fn process_image(input_filename: &Path, output_dir: &Path) {
         .to_str()
         .unwrap()
         .replace(".jpg", "_thumb.jpg");
-    let thumbnail_path = Path::new(&thumbnail_filename);
+    let thumbnail_path = output_dir.join(thumbnail_filename);
 
     if !med_image_path.exists() {
         let image = ImageReader::open(input_filename).unwrap().decode().unwrap();
@@ -227,7 +227,7 @@ fn process_image(input_filename: &Path, output_dir: &Path) {
         let med_image = thumbnail(&image, new_dimensions.0, new_dimensions.1);
 
         med_image
-            .save_with_format(output_dir.join(med_image_filename), Jpeg)
+            .save_with_format(med_image_path, Jpeg)
             .expect("failed to write output file");
     }
 
@@ -247,7 +247,7 @@ fn process_image(input_filename: &Path, output_dir: &Path) {
         }
 
         thumbnail_image
-            .save_with_format(output_dir.join(thumbnail_filename), Jpeg)
+            .save_with_format(thumbnail_path, Jpeg)
             .expect("failed to write output file");
     }
 }
