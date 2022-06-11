@@ -29,12 +29,14 @@ fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) 
     };
     let caption = caption.as_str().unwrap().trim();
 
-    let number_re = Regex::new(r"^(\d+)\. ").expect("Invalid regex");
+    let number_re = Regex::new(r"(^\d+|c)\. (\w+|\d+)").expect("Invalid regex");
     let lines_re = Regex::new(r"(\n|\. )").expect("Invalid regex");
     let split_regex = Regex::new(r"(.*) ((\n|http://\S+|https://\S+).*?)").expect("Invalid regex");
     let tidy_regex = Regex::new(r"(#\S+\s*|^\.|\n\.|https?://\S+)").expect("Invalid regex");
 
-    let caption = number_re.replace_all(caption, "${1}.\u{00A0}").to_string();
+    let caption = number_re
+        .replace_all(caption, "${1}.\u{00A0}${2}")
+        .to_string();
 
     if lines_re.is_match(caption.as_str()) {
         let mut split = lines_re.splitn(caption.as_str(), 2);
