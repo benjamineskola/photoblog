@@ -66,6 +66,16 @@ fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) 
     }
 }
 
+fn slugify(name: &str) -> String {
+    let slug_regex = Regex::new(r"[^A-Za-z0-9 \u{00A0}-]+").expect("invalid regex");
+
+    slug_regex
+        .replace_all(name.to_lowercase().as_str(), "")
+        .trim()
+        .replace(' ', "-")
+        .replace("\u{00A0}", "-")
+}
+
 fn get_data(filename: &Path) {
     let basedir = Path::new("/Users/ben/Code/photoblog/content/");
 
@@ -98,15 +108,8 @@ fn get_data(filename: &Path) {
         timestamp_str.replace_range((timestamp_str.len() - 4).., "+0000");
         let timestamp = DateTime::parse_from_str(&timestamp_str, "%Y-%m-%d_%H-%M-%S%z").unwrap();
 
-        let slug_regex = Regex::new(r"[^A-Za-z0-9 \u{00A0}-]+").expect("invalid regex");
-
         let slug = match &title {
-            Some(title) => slug_regex
-                .replace_all(title.to_lowercase().as_str(), "")
-                .to_string()
-                .trim()
-                .replace(' ', "-")
-                .replace("\u{00A0}", "-"),
+            Some(title) => slugify(title),
             None => timestamp.format("%Y-%m-%dT%H:%M:%S").to_string(),
         };
         let output_filename = match &title {
