@@ -1,9 +1,13 @@
+use std::cmp::Ordering;
 use std::env;
-use std::fs::{read_dir, remove_file, File};
+use std::fs::{hard_link, read_dir, remove_file, File};
 use std::io::prelude::*;
 use std::path::Path;
 
 use chrono::{DateTime, FixedOffset};
+use image::imageops::{crop, thumbnail};
+use image::io::Reader as ImageReader;
+use image::ImageFormat::Jpeg;
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
@@ -182,6 +186,87 @@ fn generate_toml(input_filename: &Path, output_dir: &Path) {
     }
 }
 
+fn get_thumbnail_dimensions(
+    width: u32,
+    height: u32,
+    bounding_width: u32,
+    bounding_height: u32,
+) -> (u32, u32) {
+    if width == height {
+        (bounding_width, bounding_height)
+    } else {
+        let ratio = bounding_width as f64 / width as f64;
+        (bounding_width, ((height as f64) * ratio).round() as u32)
+    }
+}
+fn get_square_thumbnail_dimensions(width: u32, height: u32, bounding_size: u32) -> (u32, u32) {
+    match width.cmp(&height) {
+        Ordering::Greater => (
+            (width as f64 * (bounding_size as f64 / height as f64)) as u32,
+            bounding_size,
+        ),
+        Ordering::Less => (
+            bounding_size,
+            (height as f64 * (bounding_size as f64 / width as f64)) as u32,
+        ),
+        Ordering::Equal => (bounding_size, bounding_size),
+    }
+}
+
+fn process_image(input_filename: &Path, output_dir: &Path) {
+    let output_filename = output_dir.join(input_filename.file_name().unwrap());
+    if !output_filename.exists() {
+        hard_link(input_filename, &output_filename).expect("failed to link to output dir");
+    }
+
+    let med_image_filename = &output_filename
+        .file_name()
+        .unwrap()
+        .to_str()
+        .unwrap()
+        .replace(".jpg", "_med.jpg");
+    let med_image_path = Path::new(&med_image_filename);
+
+    let thumbnail_filename = &output_filename
+        .file_name()
+        .unwrap()
+        .to_str()
+        .unwrap()
+        .replace(".jpg", "_thumb.jpg");
+    let thumbnail_path = Path::new(&thumbnail_filename);
+
+    if !med_image_path.exists() {
+        let image = ImageReader::open(input_filename).unwrap().decode().unwrap();
+
+        let new_dimensions = get_thumbnail_dimensions(image.width(), image.height(), 800, 600);
+        let med_image = thumbnail(&image, new_dimensions.0, new_dimensions.1);
+
+        med_image
+            .save_with_format(output_dir.join(med_image_filename), Jpeg)
+            .expect("failed to write output file");
+    }
+
+    if !thumbnail_path.exists()
+        && (thumbnail_filename.ends_with("_1_thumb.jpg")
+            || thumbnail_filename.ends_with("_UTC_thumb.jpg"))
+    {
+        let image = ImageReader::open(input_filename).unwrap().decode().unwrap();
+        let new_dimensions = get_square_thumbnail_dimensions(image.width(), image.height(), 450);
+        let mut thumbnail_image = thumbnail(&image, new_dimensions.0, new_dimensions.1);
+
+        if image.width() != image.height() {
+            let mid_w = (thumbnail_image.width() as f64 / 2.0) as u32;
+            let mid_h = (thumbnail_image.height() as f64 / 2.0) as u32;
+            let cropped = crop(&mut thumbnail_image, mid_w - 225, mid_h - 225, 450, 450);
+            thumbnail_image = cropped.to_image();
+        }
+
+        thumbnail_image
+            .save_with_format(output_dir.join(thumbnail_filename), Jpeg)
+            .expect("failed to write output file");
+    }
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let input_dirname = &args[1];
@@ -198,8 +283,11 @@ fn main() {
 
     for entry in read_dir(Path::new(&input_dirname)).expect("could not read input dir") {
         let path = entry.unwrap().path();
-        if path.to_str().unwrap().ends_with(".json.xz") {
+        let file_name = path.to_str().unwrap();
+        if file_name.ends_with(".json.xz") {
             generate_toml(Path::new(&path), output_dir);
+        } else if file_name.ends_with(".jpg") && !file_name.ends_with("profile_pic.jpg") {
+            process_image(Path::new(&path), output_dir);
         }
     }
 }
