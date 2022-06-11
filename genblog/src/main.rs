@@ -4,6 +4,7 @@ use std::io::prelude::*;
 use std::path::Path;
 
 use chrono::{DateTime, FixedOffset};
+use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Serialize;
 use xz::read::XzDecoder;
@@ -29,22 +30,26 @@ fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) 
     };
     let caption = caption.as_str().unwrap().trim();
 
-    let number_re = Regex::new(r"(^\d+|c)\. (\w+|\d+)").expect("Invalid regex");
-    let lines_re = Regex::new(r"(\n|\. )").expect("Invalid regex");
-    let split_regex = Regex::new(r"(.*) ((\n|http://\S+|https://\S+).*?)").expect("Invalid regex");
-    let tidy_regex = Regex::new(r"(#\S+\s*|^\.|\n\.|https?://\S+)").expect("Invalid regex");
+    lazy_static! {
+        static ref NUMBER_RE: Regex = Regex::new(r"(^\d+|c)\. (\w+|\d+)").expect("Invalid regex");
+        static ref LINES_RE: Regex = Regex::new(r"(\n|\. )").expect("Invalid regex");
+        static ref SPLIT_RE: Regex =
+            Regex::new(r"(.*) ((\n|http://\S+|https://\S+).*?)").expect("Invalid regex");
+        static ref TIDY_RE: Regex =
+            Regex::new(r"(#\S+\s*|^\.|\n\.|https?://\S+)").expect("Invalid regex");
+    }
 
-    let caption = number_re
+    let caption = NUMBER_RE
         .replace_all(caption, "${1}.\u{00A0}${2}")
         .to_string();
 
-    if lines_re.is_match(caption.as_str()) {
-        let mut split = lines_re.splitn(caption.as_str(), 2);
+    if LINES_RE.is_match(caption.as_str()) {
+        let mut split = LINES_RE.splitn(caption.as_str(), 2);
         // println!("{:?}", split);
         let title = split.next().unwrap().to_string();
         let body = split.next().unwrap().to_string();
 
-        let body = tidy_regex.replace_all(body.as_str(), "").trim().to_string();
+        let body = TIDY_RE.replace_all(body.as_str(), "").trim().to_string();
 
         if body.is_empty() {
             return (Some(title), None);
@@ -53,7 +58,7 @@ fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) 
         }
     }
 
-    if let Some(result) = split_regex.captures(caption.as_str()) {
+    if let Some(result) = SPLIT_RE.captures(caption.as_str()) {
         if result.len() > 1 {
             let title = result.get(1).unwrap().as_str();
             let body = result.get(3).unwrap().as_str();
@@ -67,9 +72,11 @@ fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) 
 }
 
 fn slugify(name: &str) -> String {
-    let slug_regex = Regex::new(r"[^A-Za-z0-9 \u{00A0}-]+").expect("invalid regex");
+    lazy_static! {
+        static ref SLUG_RE: Regex = Regex::new(r"[^A-Za-z0-9 \u{00A0}-]+").expect("invalid regex");
+    }
 
-    slug_regex
+    SLUG_RE
         .replace_all(name.to_lowercase().as_str(), "")
         .trim()
         .replace(' ', "-")
