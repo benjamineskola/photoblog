@@ -1,98 +1,13 @@
 #!/usr/bin/env python
 
-import json
 import os
-import re
-import subprocess
 import sys
-from datetime import datetime
 from pathlib import Path
-from typing import Any
 
-import tomli_w
 from PIL import Image
 
 BLOG_DIR = Path(sys.argv[-1])
 NEWLINE = "\n"
-
-
-class Post:
-    def __init__(self, source: Path):
-        text = subprocess.run(["xzcat", file], capture_output=True).stdout
-        post = json.loads(text)
-
-        stem = file.name.removesuffix(".json.xz")
-        self.timestamp = datetime.strptime(stem, "%Y-%m-%d_%H-%M-%S_%Z")
-
-        self.caption = post["node"]["iphone_struct"].get("caption")
-        self.location = post["node"]["iphone_struct"].get("location", {}).get("name")
-        self.instagram_id = post["node"]["shortcode"]
-
-        self.title = ""
-        self.body = ""
-        if self.caption:
-            self.title, *self.body = self.caption.get("text").splitlines()
-            self.body = "\n".join(
-                line
-                for line in self.body
-                if line != "." and not line.strip().startswith("#")
-            )
-
-        if ". " in self.title or ": " in self.title or "http" in self.title:
-            split_re = r"(:\s+|(?<!^\d)\.\s+|\s*(?=http://)|\s*(?=https://))"
-            print(repr(re.split(split_re, self.title)))
-            self.title, *rest = re.split(split_re, self.title, 1)
-            self.body = (
-                "".join(w for w in rest if w not in [": ", ". ", ""]).strip()
-                + "\n"
-                + self.body
-            )
-
-        self.images = sorted(
-            Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(f"{stem}*.jpg"),
-            key=str,
-        )
-
-    def save(self):
-        metadata: dict[str, Any] = {
-            "date": self.timestamp,
-            "title": self.title,
-            "extra": {
-                "images": ["/" + image.name for image in self.images],
-                "instagram": "https://instagram.com/p/" + self.instagram_id,
-            },
-        }
-        if self.location:
-            metadata["extra"]["location"] = self.location
-
-        filename = self.timestamp.strftime("%Y-%m-%d")
-        if self.title:
-            slug = re.sub(
-                r"[^A-Za-z0-9-]+", "", self.title.lower().strip().replace(" ", "-")
-            ).strip("-")
-            filename += "-" + slug
-            metadata["slug"] = self.timestamp.strftime("%Y") + "/" + slug
-        else:
-            metadata["title"] = self.timestamp.strftime("%Y-%m-%d")
-            filename += "-" + self.timestamp.strftime("%H-%M-%S")
-            metadata["slug"] = (
-                self.timestamp.strftime("%Y")
-                + "/"
-                + self.timestamp.strftime("%Y-%m-%dT%H:%M:%S")
-            )
-        filename += ".md"
-
-        for n, image in enumerate(self.images):
-            ImageSet(image).save(with_thumbnail=(n == 0))
-
-        with (BLOG_DIR / filename).open("wb") as file:
-            file.write(b"+++\n")
-            tomli_w.dump(metadata, file)
-            file.write(b"+++\n\n")
-
-            if self.body:
-                file.write(self.body.strip().encode())
-                file.write(b"\n")
 
 
 class ImageSet:
@@ -144,4 +59,10 @@ if __name__ == "__main__":
 
     for file in files:
         print(f"Processing {file}")
-        Post(file).save()
+        stem = file.name.removesuffix(".json.xz")
+        images = sorted(
+            Path("/Users/ben/Pictures/Instagram/ben.eskola").glob(f"{stem}*.jpg"),
+            key=str,
+        )
+        for n, image in enumerate(self.images):
+            ImageSet(image).save(with_thumbnail=(n == 0))
