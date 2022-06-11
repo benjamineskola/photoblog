@@ -1,12 +1,10 @@
 +++
-date = 2017-03-26 19:40:13
+date = "2017-03-26T19:40:13+00:00"
 title = "Little sister visiting so made a Sunday roast"
 slug = "2017/little-sister-visiting-so-made-a-sunday-roast"
 
 [extra]
-images = [
-    "/2017-03-26_19-40-13_UTC.jpg",
-]
+images = ["/2017-03-26_19-40-13_UTC.jpg"]
 instagram = "https://instagram.com/p/BSHQgHdhnYm"
 +++
 
