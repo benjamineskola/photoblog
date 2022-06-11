@@ -1,5 +1,5 @@
 use std::env;
-use std::fs::File;
+use std::fs::{read_dir, File};
 use std::io::prelude::*;
 use std::path::Path;
 
@@ -83,10 +83,8 @@ fn slugify(name: &str) -> String {
         .replace('\u{00A0}', "-")
 }
 
-fn get_data(filename: &Path) {
-    let basedir = Path::new("/Users/ben/Code/photoblog/content/");
-
-    if let Ok(compressed_data) = File::open(filename) {
+fn generate_toml(input_filename: &Path, output_dir: &Path) {
+    if let Ok(compressed_data) = File::open(input_filename) {
         let mut contents = String::new();
         let mut decompressor = XzDecoder::new(compressed_data);
         decompressor
@@ -104,7 +102,7 @@ fn get_data(filename: &Path) {
 
         let instagram_id: String = data["node"]["shortcode"].to_string();
 
-        let basename = filename
+        let basename = input_filename
             .file_name()
             .expect("failed to parse filename")
             .to_str()
@@ -113,7 +111,11 @@ fn get_data(filename: &Path) {
         let mut timestamp_str = basename.clone();
         timestamp_str.replace_range((timestamp_str.len() - 8).., "");
         timestamp_str.replace_range((timestamp_str.len() - 4).., "+0000");
-        let timestamp = DateTime::parse_from_str(&timestamp_str, "%Y-%m-%d_%H-%M-%S%z").unwrap();
+        let timestamp = DateTime::parse_from_str(&timestamp_str, "%Y-%m-%d_%H-%M-%S%z");
+        if timestamp.is_err() {
+            return;
+        }
+        let timestamp = timestamp.unwrap();
 
         let slug = match &title {
             Some(title) => slugify(title),
@@ -126,12 +128,12 @@ fn get_data(filename: &Path) {
 
         let mut images: Vec<String> = vec![];
         let file_stem = basename.replace(".json.xz", "");
-        let image = basedir.join(file_stem.clone() + ".jpg");
+        let image = output_dir.join(file_stem.clone() + ".jpg");
         if image.exists() {
             images.push("/".to_owned() + image.file_name().unwrap().to_str().unwrap());
         } else {
             for i in 1..1000 {
-                let image = basedir.join(file_stem.clone() + "_" + &i.to_string() + ".jpg");
+                let image = output_dir.join(file_stem.clone() + "_" + &i.to_string() + ".jpg");
                 if image.exists() {
                     images.push("/".to_owned() + image.file_name().unwrap().to_str().unwrap());
                 } else {
@@ -153,8 +155,8 @@ fn get_data(filename: &Path) {
         };
 
         let toml = toml::to_string(&meta).unwrap();
-        let mut file =
-            File::create(basedir.join(output_filename)).expect("Failed to open file for writing");
+        let mut file = File::create(output_dir.join(output_filename))
+            .expect("Failed to open file for writing");
         file.write_all(("+++\n".to_owned() + &toml + "+++\n").as_bytes())
             .expect("failed to write to file");
 
@@ -171,7 +173,15 @@ fn get_data(filename: &Path) {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    for i in &args[1..] {
-        get_data(Path::new(i));
+    let input_dirname = &args[1];
+    let output_dirname = &args[2];
+    let output_dir = Path::new(output_dirname);
+
+    for entry in read_dir(Path::new(&input_dirname)).expect("could not read input dir") {
+        let path = entry.unwrap().path();
+        if path.to_str().unwrap().ends_with(".json.xz") {
+            println!("processing {:?}", path);
+            generate_toml(Path::new(&path), output_dir);
+        }
     }
 }
