@@ -4,9 +4,10 @@
 <nav>
   <ul>
     {% for page in section.pages %}
+    {% set thumbnail = resize_image(path=page.extra.images[0], width=450, height=450) %}
       <li>
         <a href="{{ page.permalink | safe }}">
-          <img src="{{ page.extra.images[0] | replace(from=".jpg", to="_thumb.jpg")  }}" class="index" loading="lazy" />
+          <img src="{{ thumbnail.url }}" class="index" loading="lazy" />
         </a>
       </li>
     {% endfor %}

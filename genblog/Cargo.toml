@@ -13,4 +13,3 @@ toml = "*"
 chrono = {version = "*", features = ["serde"]}
 regex = "*"
 lazy_static = "*"
-image = "*"
