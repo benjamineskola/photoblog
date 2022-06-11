@@ -8,5 +8,3 @@ images = ["/2016-04-01_10-28-19_UTC.jpg"]
 instagram = "https://instagram.com/p/BDp39yvIIKh"
 location = "Tate Modern"
 +++
-
-https://500px.com/photo/147219563/

@@ -37,38 +37,23 @@ fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) 
     lazy_static! {
         static ref NUMBER_RE: Regex = Regex::new(r"(^\d+|c)\. (\w+|\d+)").expect("Invalid regex");
         static ref LINES_RE: Regex = Regex::new(r"(\n|\. )").expect("Invalid regex");
-        static ref SPLIT_RE: Regex =
-            Regex::new(r"(.*) ((\n|http://\S+|https://\S+).*?)").expect("Invalid regex");
         static ref TIDY_RE: Regex =
-            Regex::new(r"(#\S+\s*|^\.|\n\.|https?://\S+)").expect("Invalid regex");
+            Regex::new(r"(^#|#\S+\s*|^\.|\n\.|https?://\S+)").expect("Invalid regex");
     }
 
-    let caption = NUMBER_RE
-        .replace_all(caption, "${1}.\u{00A0}${2}")
-        .to_string();
+    let caption = NUMBER_RE.replace_all(caption, "${1}.\u{00A0}${2}");
+    let caption = TIDY_RE.replace_all(&caption, "");
+    let caption = caption.trim();
 
-    if LINES_RE.is_match(caption.as_str()) {
-        let mut split = LINES_RE.splitn(caption.as_str(), 2);
-        // println!("{:?}", split);
+    if LINES_RE.is_match(caption) {
+        let mut split = LINES_RE.splitn(caption, 2);
         let title = split.next().unwrap().to_string();
         let body = split.next().unwrap().to_string();
 
-        let body = TIDY_RE.replace_all(body.as_str(), "").trim().to_string();
-
-        if body.is_empty() {
-            return (Some(title), None);
+        if body.is_empty() || body == "." {
+            (Some(title), None)
         } else {
-            return (Some(title), Some(body));
-        }
-    }
-
-    if let Some(result) = SPLIT_RE.captures(caption.as_str()) {
-        if result.len() > 1 {
-            let title = result.get(1).unwrap().as_str();
-            let body = result.get(3).unwrap().as_str();
-            (Some(title.to_string()), Some(body.to_string()))
-        } else {
-            (Some(caption.to_string()), None)
+            (Some(title), Some(body))
         }
     } else {
         (Some(caption.to_string()), None)
