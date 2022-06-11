@@ -17,7 +17,7 @@
   {% else %}
   <link rel="canonical" href="{{ config.base_url }}" />
   {% endif %}
-  <link rel="alternate" href="/atom.xml" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
 
   {% block header %} {% endblock %}
 </head>
