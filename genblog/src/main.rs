@@ -80,7 +80,7 @@ fn slugify(name: &str) -> String {
         .replace_all(name.to_lowercase().as_str(), "")
         .trim()
         .replace(' ', "-")
-        .replace("\u{00A0}", "-")
+        .replace('\u{00A0}', "-")
 }
 
 fn get_data(filename: &Path) {
@@ -128,14 +128,12 @@ fn get_data(filename: &Path) {
         let file_stem = basename.replace(".json.xz", "");
         let image = basedir.join(file_stem.clone() + ".jpg");
         if image.exists() {
-            images.push("/".to_owned() + &image.file_name().unwrap().to_str().unwrap().to_string());
+            images.push("/".to_owned() + image.file_name().unwrap().to_str().unwrap());
         } else {
             for i in 1..1000 {
                 let image = basedir.join(file_stem.clone() + "_" + &i.to_string() + ".jpg");
                 if image.exists() {
-                    images.push(
-                        "/".to_owned() + &image.file_name().unwrap().to_str().unwrap().to_string(),
-                    );
+                    images.push("/".to_owned() + image.file_name().unwrap().to_str().unwrap());
                 } else {
                     break;
                 }
@@ -161,9 +159,12 @@ fn get_data(filename: &Path) {
             .expect("failed to write to file");
 
         if let Some(body) = body {
-            file.write_all("\n".as_bytes());
-            file.write_all(body.trim().as_bytes());
-            file.write_all("\n".as_bytes());
+            file.write_all("\n".as_bytes())
+                .expect("failed to write to file");
+            file.write_all(body.trim().as_bytes())
+                .expect("failed to write to file");
+            file.write_all("\n".as_bytes())
+                .expect("failed to write to file");
         }
     }
 }
