@@ -68,7 +68,7 @@ fn slugify(name: &str) -> String {
         .replace('\u{00A0}', "-")
 }
 
-fn generate_toml(input_filename: &Path, output_dir: &Path) {
+fn generate_toml(input_filename: &Path, output_dir: &Path) -> Result<(), std::io::Error> {
     if let Ok(compressed_data) = File::open(input_filename) {
         let mut contents = String::new();
         let mut decompressor = XzDecoder::new(compressed_data);
@@ -98,7 +98,7 @@ fn generate_toml(input_filename: &Path, output_dir: &Path) {
         timestamp_str.replace_range((timestamp_str.len() - 4).., "+0000");
         let timestamp = DateTime::parse_from_str(&timestamp_str, "%Y-%m-%d_%H-%M-%S%z");
         if timestamp.is_err() {
-            return;
+            return Ok(());
         }
         let timestamp = timestamp.unwrap();
 
@@ -151,50 +151,51 @@ fn generate_toml(input_filename: &Path, output_dir: &Path) {
         };
 
         let toml = toml::to_string(&meta).unwrap();
-        let mut file = File::create(output_dir.join(output_filename))
-            .expect("Failed to open file for writing");
-        file.write_all(("+++\n".to_owned() + &toml + "+++\n").as_bytes())
-            .expect("failed to write to file");
+        let mut file = File::create(output_dir.join(output_filename))?;
+        file.write_all(("+++\n".to_owned() + &toml + "+++\n").as_bytes())?;
 
         if let Some(body) = body {
-            file.write_all("\n".as_bytes())
-                .expect("failed to write to file");
-            file.write_all(body.trim().as_bytes())
-                .expect("failed to write to file");
-            file.write_all("\n".as_bytes())
-                .expect("failed to write to file");
+            file.write_all("\n".as_bytes())?;
+            file.write_all(body.trim().as_bytes())?;
+            file.write_all("\n".as_bytes())?;
         }
     }
+
+    Ok(())
 }
 
-fn process_image(input_filename: &Path, output_dir: &Path) {
+fn process_image(input_filename: &Path, output_dir: &Path) -> Result<(), std::io::Error> {
     let output_filename = output_dir.join(input_filename.file_name().unwrap());
     if !output_filename.exists() {
-        hard_link(input_filename, &output_filename).expect("failed to link to output dir");
+        hard_link(input_filename, &output_filename)?;
     }
+
+    Ok(())
 }
 
-fn main() {
+fn main() -> Result<(), std::io::Error> {
     let args: Vec<String> = env::args().collect();
     let input_dirname = &args[1];
     let output_dirname = &args[2];
     let output_dir = Path::new(output_dirname);
 
     for entry in read_dir(&output_dir).expect("could not read output dir") {
-        let path = entry.unwrap().path();
+        let path = entry?.path();
         let file_name = path.file_name().unwrap().to_str().unwrap();
         if file_name.ends_with(".md") && !file_name.starts_with('_') {
-            remove_file(path).expect("failed to remove");
+            remove_file(path)?;
         }
     }
 
     for entry in read_dir(Path::new(&input_dirname)).expect("could not read input dir") {
-        let path = entry.unwrap().path();
+        let path = entry?.path();
         let file_name = path.to_str().unwrap();
         if file_name.ends_with(".json.xz") {
-            generate_toml(Path::new(&path), output_dir);
+            generate_toml(Path::new(&path), output_dir)?;
         } else if file_name.ends_with(".jpg") && !file_name.ends_with("profile_pic.jpg") {
-            process_image(Path::new(&path), output_dir);
+            process_image(Path::new(&path), output_dir)?;
         }
     }
+
+    Ok(())
 }
