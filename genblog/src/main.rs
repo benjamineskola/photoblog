@@ -24,19 +24,38 @@ struct PostMetaExtra {
 }
 
 fn parse_caption(caption: &json::JsonValue) -> (Option<String>, Option<String>) {
-    match caption {
-        json::Null => return (None, None),
-        _ => (),
+    if let json::Null = caption {
+        return (None, None);
     };
-    let caption = caption.as_str().unwrap();
+    let caption = caption.as_str().unwrap().trim();
 
-    let split_regex = Regex::new(r"(.*) ((http://\S+|https://\S+).*?)").expect("Invalid regex");
+    let number_re = Regex::new(r"^(\d+)\. ").expect("Invalid regex");
+    let lines_re = Regex::new(r"(\n|\. )").expect("Invalid regex");
+    let split_regex = Regex::new(r"(.*) ((\n|http://\S+|https://\S+).*?)").expect("Invalid regex");
+    let tidy_regex = Regex::new(r"(#\S+\s*|^\.|\n\.|https?://\S+)").expect("Invalid regex");
 
-    if let Some(result) = split_regex.captures(caption) {
+    let caption = number_re.replace_all(caption, "${1}.\u{00A0}").to_string();
+
+    if lines_re.is_match(caption.as_str()) {
+        let mut split = lines_re.splitn(caption.as_str(), 2);
+        // println!("{:?}", split);
+        let title = split.next().unwrap().to_string();
+        let body = split.next().unwrap().to_string();
+
+        let body = tidy_regex.replace_all(body.as_str(), "").trim().to_string();
+
+        if body.is_empty() {
+            return (Some(title), None);
+        } else {
+            return (Some(title), Some(body));
+        }
+    }
+
+    if let Some(result) = split_regex.captures(caption.as_str()) {
         if result.len() > 1 {
-            let title = result.get(1).unwrap().as_str().to_string();
-            let body = result.get(3).unwrap().as_str().to_string();
-            (Some(title), Some(body))
+            let title = result.get(1).unwrap().as_str();
+            let body = result.get(3).unwrap().as_str();
+            (Some(title.to_string()), Some(body.to_string()))
         } else {
             (Some(caption.to_string()), None)
         }
@@ -77,14 +96,15 @@ fn get_data(filename: &Path) {
         timestamp_str.replace_range((timestamp_str.len() - 4).., "+0000");
         let timestamp = DateTime::parse_from_str(&timestamp_str, "%Y-%m-%d_%H-%M-%S%z").unwrap();
 
-        let slug_regex = Regex::new(r"[^A-Za-z0-9- ]+").expect("invalid regex");
+        let slug_regex = Regex::new(r"[^A-Za-z0-9 \u{00A0}-]+").expect("invalid regex");
 
         let slug = match &title {
             Some(title) => slug_regex
-                .replace_all(title.as_str().to_lowercase().as_str(), "")
+                .replace_all(title.to_lowercase().as_str(), "")
                 .to_string()
                 .trim()
-                .replace(' ', "-"),
+                .replace(' ', "-")
+                .replace("\u{00A0}", "-"),
             None => timestamp.format("%Y-%m-%dT%H:%M:%S").to_string(),
         };
         let output_filename = match &title {
