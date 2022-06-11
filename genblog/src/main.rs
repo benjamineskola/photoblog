@@ -117,14 +117,25 @@ fn generate_toml(input_filename: &Path, output_dir: &Path) {
         }
         let timestamp = timestamp.unwrap();
 
-        let slug = match &title {
+        let mut slug = match &title {
             Some(title) => slugify(title),
             None => timestamp.format("%Y-%m-%dT%H:%M:%S").to_string(),
         };
-        let output_filename = match &title {
+        let output_filename_stem = match &title {
             Some(_) => timestamp.format("%Y-%m-%d-").to_string() + &slug,
             None => timestamp.format("%Y-%m-%d-%H-%M-%S").to_string(),
-        } + ".md";
+        };
+        let mut output_filename = output_filename_stem.clone() + ".md";
+
+        let mut counter = 0;
+        while output_dir.join(&output_filename).exists() {
+            counter += 1;
+            output_filename =
+                (output_filename_stem.clone()) + "-" + counter.to_string().as_str() + ".md"
+        }
+        if counter > 0 {
+            slug += &("-".to_owned() + counter.to_string().as_str());
+        }
 
         let mut images: Vec<String> = vec![];
         let file_stem = basename.replace(".json.xz", "");
@@ -180,7 +191,6 @@ fn main() {
     for entry in read_dir(Path::new(&input_dirname)).expect("could not read input dir") {
         let path = entry.unwrap().path();
         if path.to_str().unwrap().ends_with(".json.xz") {
-            println!("processing {:?}", path);
             generate_toml(Path::new(&path), output_dir);
         }
     }
