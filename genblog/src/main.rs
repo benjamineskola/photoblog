@@ -1,5 +1,5 @@
 use std::env;
-use std::fs::{read_dir, File};
+use std::fs::{read_dir, remove_file, File};
 use std::io::prelude::*;
 use std::path::Path;
 
@@ -187,6 +187,14 @@ fn main() {
     let input_dirname = &args[1];
     let output_dirname = &args[2];
     let output_dir = Path::new(output_dirname);
+
+    for entry in read_dir(&output_dir).expect("could not read output dir") {
+        let path = entry.unwrap().path();
+        let file_name = path.file_name().unwrap().to_str().unwrap();
+        if file_name.ends_with(".md") && !file_name.starts_with('_') {
+            remove_file(path).expect("failed to remove");
+        }
+    }
 
     for entry in read_dir(Path::new(&input_dirname)).expect("could not read input dir") {
         let path = entry.unwrap().path();
