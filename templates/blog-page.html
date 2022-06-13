@@ -45,10 +45,15 @@
   {% endfor %}
 
   {% if page.extra.instagram %}
-    <a class="fab fa-instagram" href="{{ page.extra.instagram }}"></a>
+    <p><a class="fab fa-instagram" href="{{ page.extra.instagram }}"></a></p>
   {% endif %}
+
+  <p>
+  {% if page.later %}<a href="{{ page.later.permalink }}">newer</a>{% endif %}
+  <a href="/">home</a>
+  {% if page.earlier %}<a href="{{ page.earlier.permalink }}">older</a>{% endif %}
+  </p>
 </main>
-<p><a href="/">back</a></p>
 
 <footer class="copyright">
   © {{ page.date | date(format="%Y") }}
