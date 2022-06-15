@@ -6,8 +6,8 @@
     {% for page in section.pages %}
     {% set thumbnail = resize_image(path=page.extra.images[0], width=450, height=450) %}
       <li>
-        <a href="{{ page.permalink | safe }}">
-          <img src="{{ thumbnail.url }}" class="index" loading="lazy" />
+        <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
+          <img src="{{ thumbnail.url }}" class="index" loading="lazy" alt="{{ page.title }}" />
         </a>
       </li>
     {% endfor %}
