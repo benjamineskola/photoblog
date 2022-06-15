@@ -29,7 +29,7 @@
 
   <ul>
     {% for image in page.extra.images %}
-    {% set small_image = resize_image(path=image, width=800, height=600, op="fit") %}
+    {% set small_image = resize_image(path=image | trim_start_matches(pat="/"), width=800, height=600, op="fit") %}
       <li>
         <a href="#image-{{ loop.index }}-lightbox" id="image-{{ loop.index }}-anchor">
           <img src="{{ small_image.url }}" loading="lazy" />
