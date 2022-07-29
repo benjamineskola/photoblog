@@ -20,6 +20,7 @@ struct PostMeta {
 #[derive(Serialize)]
 struct PostMetaExtra {
     images: Vec<String>,
+    alts: Option<Vec<String>>,
     instagram: String,
     location: Option<String>,
 }
@@ -138,7 +139,26 @@ fn generate_toml(input_filename: &Path, output_dir: &Path) -> Result<(), std::io
             }
         }
 
+        let mut alts: Vec<String> = vec![];
+
+        if let json::JsonValue::Array(nodes) = &data["node"]["edge_sidecar_to_children"]["edges"] {
+            for node in nodes {
+                let caption = &node["node"]["accessibility_caption"];
+                if caption.is_empty() {
+                    continue;
+                }
+                if !caption.to_string().starts_with("Photo by Ben on") {
+                    alts.push(caption.to_string());
+                }
+            }
+        }
+
         let extra = PostMetaExtra {
+            alts: if alts.len() == images.len() {
+                Some(alts)
+            } else {
+                None
+            },
             images,
             location,
             instagram: "https://instagram.com/p/".to_owned() + &instagram_id,

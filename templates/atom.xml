@@ -36,7 +36,7 @@
 	    <ul>
   	    {% for image in page.extra.images %}
     	    <li>
-	          <img src="{{ config.base_url }}{{ image }}" />
+	          <img src="{{ config.base_url }}{{ image }}" {% if page.extra.alts %}alt="{{ page.extra.alts[loop.index0] }}"{% endif %}/>
     	    </li>
   	    {% endfor %}
 	    </ul>
