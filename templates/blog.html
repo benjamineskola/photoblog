@@ -7,7 +7,7 @@
     {% set thumbnail = resize_image(path=page.extra.images[0] | trim_start_matches(pat="/"), width=450, height=450) %}
       <li>
         <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
-          <img src="{{ thumbnail.url }}" class="index" loading="lazy" width="{{ thumbnail.width }}" height="{{ thumbnail.height }}" alt="{% if page.extra.alts %}{{ page.extra.alts.0 }}{% else %}{{ page.title }}{% endif %}" />
+          <img src="{{ thumbnail.url }}" class="index" {% if loop.index > 3 %}loading="lazy"{% endif %} width="{{ thumbnail.width }}" height="{{ thumbnail.height }}" alt="{% if page.extra.alts %}{{ page.extra.alts.0 }}{% else %}{{ page.title }}{% endif %}" />
         </a>
       </li>
     {% endfor %}
