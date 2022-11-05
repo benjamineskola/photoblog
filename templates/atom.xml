@@ -21,26 +21,27 @@
 	<id>{{ feed_url | safe }}</id>
 	{%- for page in pages %}
 	<entry xml:lang="{{ page.lang }}">
-		<title>{{ page.title }}</title>
+		<title>{% if page.title %}{{ page.title }}{% else %}Untitled ({{ page.date | date(format="%d %b %Y") }}){% endif %}</title>
+		<author><name>Benjamin Eskola</name></author>
 		<published>{{ page.date | date(format="%+") }}</published>
 		<updated>{{ page.updated | default(value=page.date) | date(format="%+") }}</updated>
 		<link href="{{ page.permalink | safe }}" type="text/html"/>
 		<id>{{ page.permalink | safe }}</id>
-		<content type="html">
+		<content type="html"><![CDATA[
       {% if page.extra.location %}
 	      <p class="location">@ {{ page.extra.location }}</p>
 	    {% endif %}
 
 	    {{ page.content | safe }}
 
-	    <ul>
+	    <ul style="list-style-type: none;">
   	    {% for image in page.extra.images %}
     	    <li>
-	          <img src="{{ config.base_url }}{{ image }}" {% if page.extra.alts %}alt="{{ page.extra.alts[loop.index0] }}"{% endif %}/>
+	          <img src="{{ config.base_url | safe }}/{{ image | safe }}" {% if page.extra.alts %}alt="{{ page.extra.alts[loop.index0] }}"{% endif %}/>
     	    </li>
   	    {% endfor %}
 	    </ul>
-		</content>
+		]]></content>
 	</entry>
 	{%- endfor %}
 </feed>
