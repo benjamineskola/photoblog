@@ -19,7 +19,7 @@
 	<generator uri="https://www.getzola.org/">Zola</generator>
 	<updated>{{ last_updated | date(format="%+") }}</updated>
 	<id>{{ feed_url | safe }}</id>
-	{%- for page in pages %}
+	{%- for page in pages | slice(start=0, end=20) %}
 	<entry xml:lang="{{ page.lang }}">
 		<title>{% if page.title %}{{ page.title }}{% else %}Untitled ({{ page.date | date(format="%d %b %Y") }}){% endif %}</title>
 		<author><name>Benjamin Eskola</name></author>
