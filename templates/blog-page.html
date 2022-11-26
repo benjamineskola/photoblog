@@ -20,34 +20,36 @@
   </a>
 </h2>
 <p class="subtitle"><strong>{{ page.date | date(format="%d %b %Y") }}</strong></p>
-<main>
+<r-grid columns=2 columns-s=1>
   {% if page.extra.location %}
-  <p class="location">@ {{ page.extra.location }}</p>
+  <r-cell span=row class="location">@ {{ page.extra.location }}</r-cell>
   {% endif %}
 
   {{ page.content | safe }}
 
-  <ul>
-    {% for image in page.extra.images %}
-    {% set small_image = resize_image(path=image | trim_start_matches(pat="/"), width=800, height=600, op="fit") %}
-      <li>
-        <a href="#image-{{ loop.index }}-lightbox" id="image-{{ loop.index }}-anchor">
-          <img src="{{ small_image.url }}" {% if loop.index > 1 %}loading="lazy"{% endif %} width="{{ small_image.width }}" height="{{ small_image.height}}" {% if page.extra.alts %}alt="{{ page.extra.alts[loop.index0] }}"{% endif %}/>
-        </a>
+  {% for image in page.extra.images %}
+  {% set small_image = resize_image(path=image | trim_start_matches(pat="/"), width=800, height=600, op="fit") %}
+  <r-cell{% if not page.extra.alts %} span=row{% endif %}>
+      <a href="#image-{{ loop.index }}-lightbox" id="image-{{ loop.index }}-anchor">
+        <img src="{{ small_image.url }}" {% if loop.index > 1 %}loading="lazy"{% endif %} width="{{ small_image.width }}" height="{{ small_image.height}}" {% if page.extra.alts %}alt="{{ page.extra.alts[loop.index0] }}"{% endif %}/>
+      </a>
+    </r-cell>
 
-        {% if page.extra.alts %}{{ page.extra.alts[loop.index0] }}{% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+    {% if page.extra.alts %}
+      <r-cell>
+        {{ page.extra.alts[loop.index0] }}
+      </r-cell>
+    {% endif %}
+  {% endfor %}
 
   {% for image in page.extra.images %}
     <a href="#{% if loop.index > 1 %}image-{{ loop.index }}-anchor{% endif %}" class="lightbox" id="image-{{ loop.index }}-lightbox">
-      <span style="background-image: url('/{{ image }}')"></span>
+      <span style="background-image: url('{{ image }}')"></span>
     </a>
   {% endfor %}
 
   {% if page.extra.instagram %}
-    <p><a class="fab fa-instagram" href="{{ page.extra.instagram }}" title="instagram"><svg class="icon icon-instagram"><use xlink:href="/symbol-defs.svg#icon-instagram"></use></svg></a></p>
+    <r-cell span=row><a class="fab fa-instagram" href="{{ page.extra.instagram }}" title="instagram"><svg class="icon icon-instagram"><use xlink:href="/symbol-defs.svg#icon-instagram"></use></svg></a></r-cell>
   {% endif %}
 
   <p>
@@ -55,7 +57,7 @@
   <a href="/">home</a>
   {% if page.earlier %}<a href="{{ page.earlier.permalink }}">older</a>{% endif %}
   </p>
-</main>
+</r-grid>
 
 <footer class="copyright">
   © {{ page.date | date(format="%Y") }}

@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<nav>
-  <ul>
-    {% for page in section.pages %}
-    {% set thumbnail = resize_image(path=page.extra.images[0] | trim_start_matches(pat="/"), width=450, height=450) %}
-      <li>
-        <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
-          <img src="{{ thumbnail.url }}" class="index" {% if loop.index > 3 %}loading="lazy"{% endif %} width="{{ thumbnail.width }}" height="{{ thumbnail.height }}" alt="{% if page.extra.alts %}{{ page.extra.alts.0 }}{% else %}{{ page.title }}{% endif %}" />
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</nav>
+<r-grid columns=6 columns-s=1>
+  {% for page in section.pages %}
+  {% set thumbnail = resize_image(path=page.extra.images[0] | trim_start_matches(pat="/"), width=450, height=450) %}
+    <r-cell span-s=1 span={% if loop.last and section.pages | length % 3 == 1 %}3+2{% elif section.pages | length % 3 == 2 and loop.index == section.pages | length - 1 %}2+2{% else %}2{% endif %}>
+      <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
+        <img src="{{ thumbnail.url }}" class="index" {% if loop.index > 3 %}loading="lazy"{% endif %} width="{{ thumbnail.width }}" height="{{ thumbnail.height }}" alt="{% if page.extra.alts %}{{ page.extra.alts.0 }}{% else %}{{ page.title }}{% endif %}" />
+      </a>
+    </r-cell>
+  {% endfor %}
+</r-grid>
 
 <footer class="copyright">
   © 2011–{{section.pages[0].date | date(format="%Y") }}
