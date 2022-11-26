@@ -20,7 +20,7 @@
   </a>
 </h2>
 <p class="subtitle"><strong>{{ page.date | date(format="%d %b %Y") }}</strong></p>
-<r-grid columns=2 columns-s=1>
+<r-grid columns={% if page.extra.alts or page.extra.captions %}2{% else %}1{% endif %} columns-s=1>
   {% if page.extra.location %}
   <r-cell span=row class="location">@ {{ page.extra.location }}</r-cell>
   {% endif %}
@@ -29,13 +29,17 @@
 
   {% for image in page.extra.images %}
   {% set small_image = resize_image(path=image | trim_start_matches(pat="/"), width=800, height=600, op="fit") %}
-  <r-cell{% if not page.extra.alts %} span=row{% endif %}>
+  <r-cell>
       <a href="#image-{{ loop.index }}-lightbox" id="image-{{ loop.index }}-anchor">
         <img src="{{ small_image.url }}" {% if loop.index > 1 %}loading="lazy"{% endif %} width="{{ small_image.width }}" height="{{ small_image.height}}" {% if page.extra.alts %}alt="{{ page.extra.alts[loop.index0] }}"{% endif %}/>
       </a>
     </r-cell>
 
-    {% if page.extra.alts %}
+    {% if page.extra.captions and page.extra.captions[loop.index0] %}
+      <r-cell>
+        {{ page.extra.captions[loop.index0] }}
+      </r-cell>
+    {% elif page.extra.alts and page.extra.alts[loop.index0] %}
       <r-cell>
         {{ page.extra.alts[loop.index0] }}
       </r-cell>
