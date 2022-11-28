@@ -48,7 +48,7 @@
 
   {% for image in page.extra.images %}
     <a href="#{% if loop.index > 1 %}image-{{ loop.index }}-anchor{% endif %}" class="lightbox" id="image-{{ loop.index }}-lightbox">
-      <span style="background-image: url('{{ image }}')"></span>
+      <span style="background-image: url('/{{ image | trim_start_matches(pat="/") }}')"></span>
     </a>
   {% endfor %}
 
